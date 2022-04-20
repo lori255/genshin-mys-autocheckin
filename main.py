@@ -20,13 +20,15 @@ uid = '100000000'
 
 headers = {}
 
-
-def send_message_QiYeVX(_message, useridlist = ['YanZiAng']): # 默认发送给自己
+# 发送企业微信消息
+def send_message_QiYeVX(_message, useridlist):
     useridstr = "|".join(useridlist)
-    agentid = '1000003'
-
-    corpid = 'ww6fdcb072ee370d0d'
-    corpsecret = 'M_OMoPRDlnxhFdmsB-XGaGwlJhEIcf-708s_Qk2gF2M'
+    # 企业微信agentid，自行更改
+    agentid = '###'
+    # 企业微信corpid，自行更改
+    corpid = '###'
+    # 企业微信corpsecret，自行更改
+    corpsecret = '###'
     response = requests.get(f"https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpid}&corpsecret={corpsecret}")
     data = json.loads(response.text)
     access_token = data['access_token']
@@ -47,7 +49,7 @@ def send_message_QiYeVX(_message, useridlist = ['YanZiAng']): # 默认发送给�
     response_send = requests.post(f"https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={access_token}", data=json_str)
     return json.loads(response_send.text)['errmsg'] == 'ok'
 
-
+# 格式化文本信息，可以自行修改
 def getText():
     # 签到
     signResult = json.loads(sign())
@@ -89,7 +91,7 @@ def md5(text):
     md5.update(text.encode())
     return md5.hexdigest()
 
-
+# 生成DS校验码
 def getDS():
     # n = 'cx2y9z9a29tfqvr1qsq6c7yz99b5jsqt' # v2.2.0 @Womsxd
     n = "h8w582wxwgqvahcdkpvdhbh2w9casgfl"
@@ -98,7 +100,7 @@ def getDS():
     c = md5("salt=" + n + "&t=" + i + "&r=" + r)
     return "{},{},{}".format(i, r, c)
 
-
+# 生成每日任务DS校验码
 def getDailyDS():
     br = ""
     s = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
@@ -176,7 +178,7 @@ def getYsAvatars():
     userInfoResult = requests.get(url.format(region, uid), headers=headers)
     return userInfoResult.content.decode("utf-8")
 
-
+# 将cookie转化为字典形式
 def cookieToDict(cookie):
     cookieDict = {}
     cookies = cookie.split("; ")
@@ -187,7 +189,7 @@ def cookieToDict(cookie):
         cookieDict[p[0]] = value
     return cookieDict
 
-
+# 秒数转化为时间
 def secondToTime(second):
     re_time = second
     m, s = divmod(int(re_time), 60)
@@ -195,7 +197,7 @@ def secondToTime(second):
     time = "%02d小时%02d分钟%02d秒" % (h, m, s)
     return time
 
-
+# 云函数执行主函数
 def main_handler(str1, str2):
     global headers
     headers = buildHearders()

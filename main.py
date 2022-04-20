@@ -60,7 +60,6 @@ def getText():
     signInfo = json.loads(getSignInfo())["data"]
     award = signInfo["awards"][totalSignDay - 1]
     dailyNote = json.loads(getDailyNote())["data"]
-    # 方糖message内容，请不要格式化这段字符串
     message = '''
 游戏昵称：{} 
 签到结果：{} 
